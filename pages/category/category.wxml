@@ -1,0 +1,54 @@
+<view class='container category'>
+  <!-- 导航 -->
+  <view class='nav'>
+    <view 
+    wx:for='{{categorys}}' 
+    wx:key='index'
+    bindtap="selectNav"
+    data-index="{{index}}"
+    data-id="{{item._id}}"
+    class="{{selIndex == index?'sel':''}}"
+    >
+      {{item.kindName}}
+    </view>
+  </view>
+  <!-- 产品列表 -->
+  <view class="product-wrapper" >
+    <view
+    class="product-container animation"
+    style="transform:translateY({{-100*selIndex}}vh)"
+    >
+    <!-- 每个类别对应一屏 -->
+      <view
+      wx:for='{{categorys}}'
+      wx:key='index'
+      >
+        {{item.kindName}}
+        <!-- 每一个类别的商品展示 -->
+        <view
+        wx:if='{{item.list.length===0}}'
+        >
+        暂无数据
+        </view>
+        <view
+        wx:else
+        class="product-list"
+        >
+        <view
+        wx:for='{{item.list}}'
+        wx:key='index'
+        class="product-item"
+        bindtap="goDetail"
+        data-id="{{item._id}}"
+        >
+        <image mode="widthFix"
+        src="{{imgServer+item.goodsImgPath[0]}}"
+        ></image>
+        <text>{{item.name}}</text>
+        <text>{{item.price}}</text>
+        </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
